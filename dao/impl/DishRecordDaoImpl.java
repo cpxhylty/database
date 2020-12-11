@@ -1,11 +1,13 @@
 package dao.impl;
 
 import dao.DishRecordDao;
+import pojo.DishComment;
+import pojo.DishRecord;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class DishRecordDaoImpl implements DishRecordDao {
     @Override
@@ -49,5 +51,34 @@ public class DishRecordDaoImpl implements DishRecordDao {
             System.out.println("update fail!!");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<DishRecord> searchByOrderNumber(int orderNumber) {
+        ArrayList<DishRecord> res = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "SELECT * FROM dish_record where order_number=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, orderNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                DishRecord dishRecord = new DishRecord();
+                dishRecord.setOrderNumber(resultSet.getInt("order_number"));
+                dishRecord.setDishName(resultSet.getString("dish_name"));
+                dishRecord.setDishNumber(resultSet.getInt("dish_number"));
+                res.add(dishRecord);
+            }
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            System.out.println("select fail!!");
+            e.printStackTrace();
+        }
+        return res;
     }
 }

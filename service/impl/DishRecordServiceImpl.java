@@ -2,7 +2,10 @@ package service.impl;
 
 import dao.DishRecordDao;
 import dao.impl.DishRecordDaoImpl;
+import pojo.DishRecord;
 import service.DishRecordService;
+
+import java.util.List;
 
 public class DishRecordServiceImpl implements DishRecordService {
     DishRecordDao dishRecordDao = new DishRecordDaoImpl();
@@ -14,6 +17,11 @@ public class DishRecordServiceImpl implements DishRecordService {
 
     @Override
     public void deleteDish(int orderNumber, String dishName, int deleteNumber) {
-        dishRecordDao.orderDish(orderNumber, dishName, deleteNumber);
+        dishRecordDao.deleteDish(orderNumber, dishName, deleteNumber);
+    }
+
+    @Override
+    public List<DishRecord> searchByOrderNumber(int orderNumber) {
+        return dishRecordDao.searchByOrderNumber(orderNumber);
     }
 }

@@ -1,5 +1,5 @@
 package service;
 
 public interface SignService {
-    void addSignService(String account, int date);
+    void addSign(String account, int date);
 }

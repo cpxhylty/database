@@ -19,7 +19,7 @@ public class SignServlet extends HttpServlet {
             String account = req.getParameter("account");
             int date = Integer.parseInt(req.getParameter("date"));
 
-            signService.addSignService(account, date);
+            signService.addSign(account, date);
 
             resp.sendRedirect("");
         }

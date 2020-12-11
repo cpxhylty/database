@@ -1,5 +1,6 @@
 package servlet;
 
+import pojo.DishRecord;
 import service.DishRecordService;
 import service.impl.DishRecordServiceImpl;
 
@@ -7,7 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 public class DishRecordServlet extends HttpServlet {
     DishRecordService dishRecordService = new DishRecordServiceImpl();
@@ -30,6 +33,16 @@ public class DishRecordServlet extends HttpServlet {
             int deleteNumber = Integer.parseInt(req.getParameter("deleteNumber"));
 
             dishRecordService.deleteDish(orderNumber, dishName, deleteNumber);
+
+            resp.sendRedirect("");
+        }
+        else if (operation.equals("search")) {
+            int orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
+
+            List<DishRecord> dishRecords = dishRecordService.searchByOrderNumber(orderNumber);
+
+            HttpSession session = req.getSession();
+            session.setAttribute("dishRecords", dishRecords);
 
             resp.sendRedirect("");
         }
