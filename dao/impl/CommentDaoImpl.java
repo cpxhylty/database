@@ -3,10 +3,7 @@ package dao.impl;
 import dao.CommentDao;
 import pojo.Comment;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,28 +41,101 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public void addComment(int id, String dinnerTime, int type, String name, String content, int rating) {
+    public Comment findCommentByOrder(int orderNumber) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        /*try {
+        Comment comment = null;
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
             connection = DriverManager.getConnection(url,"root","root");
-            String sql = "INSERT INTO evaluate VALUES(?,?,?,?,?,?)";
+            String sql = "SELECT * FROM comment WHERE order_number = ?";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1,id);
-            preparedStatement.setString(2,dinnerTime);
-            preparedStatement.setInt(3,type);
-            preparedStatement.setString(4,name);
-            preparedStatement.setString(5,content);
-            preparedStatement.setInt(6,rating);
+            preparedStatement.setInt(1, orderNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                comment.setOrderNumber(resultSet.getInt("order_number"));
+                comment.setTime(new Date(resultSet.getTimestamp("register_time").getTime()));
+                comment.setName(resultSet.getString("name"));
+                comment.setContent(resultSet.getString("content"));
+                comment.setRating(resultSet.getInt("rating"));
+                comment.setType(resultSet.getInt("type"));
+            }
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return comment;
+    }
+
+    @Override
+    public void addComment(int orderNumber, int type, String name, String content, int rating, Date time) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "INSERT INTO comment VALUES(?,?,?,?,?,?)";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, orderNumber);
+            preparedStatement.setInt(2, type);
+            preparedStatement.setString(3, name);
+            preparedStatement.setString(4, content);
+            preparedStatement.setInt(5, rating);
+            preparedStatement.setTimestamp(6, new Timestamp(time.getTime()));
             int res = preparedStatement.executeUpdate();
             System.out.println("insert success!!");
             preparedStatement.close();
         } catch (Exception e) {
             System.out.println("insert fail!!");
             e.printStackTrace();
-        }*/
+        }
+    }
+
+    @Override
+    public void updateComment(int orderNumber, String name, String content, int rating, Date time) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "update comment set name=?, content=?, rating=?, time=? where order_number=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(5, orderNumber);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, content);
+            preparedStatement.setInt(3, rating);
+            preparedStatement.setTimestamp(4, new Timestamp(time.getTime()));
+            int res = preparedStatement.executeUpdate();
+            System.out.println("update success!!");
+            preparedStatement.close();
+        } catch (Exception e) {
+            System.out.println("update fail!!");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteComment(int orderNumber) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "delete from comment where order_number=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, orderNumber);
+            int res = preparedStatement.executeUpdate();
+            System.out.println("delete success!!");
+            preparedStatement.close();
+        } catch (Exception e) {
+            System.out.println("delete fail!!");
+            e.printStackTrace();
+        }
     }
 
     @Override

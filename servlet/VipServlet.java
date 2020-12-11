@@ -44,6 +44,7 @@ public class VipServlet extends HttpServlet {
         }
         else if (operation.equals("add")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
             String account = req.getParameter("account");
             Date registerTime = null;
             Date endTime = null;
