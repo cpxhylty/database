@@ -24,5 +24,14 @@ public class DishRecordServlet extends HttpServlet {
 
             resp.sendRedirect("");
         }
+        else if (operation.equals("delete")) {
+            int orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
+            String dishName = req.getParameter("dishName");
+            int deleteNumber = Integer.parseInt(req.getParameter("deleteNumber"));
+
+            dishRecordService.deleteDish(orderNumber, dishName, deleteNumber);
+
+            resp.sendRedirect("");
+        }
     }
 }

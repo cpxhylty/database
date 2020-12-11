@@ -29,4 +29,25 @@ public class DishRecordDaoImpl implements DishRecordDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void deleteDish(int orderNumber, String dishName, int deleteNumber) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "update dish_record set dish_number=dish_number-? where dish_name=? and order_number=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, deleteNumber);
+            preparedStatement.setString(2, dishName);
+            preparedStatement.setInt(3, orderNumber);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (Exception e) {
+            System.out.println("update fail!!");
+            e.printStackTrace();
+        }
+    }
 }

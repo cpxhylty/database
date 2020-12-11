@@ -11,4 +11,9 @@ public class DishRecordServiceImpl implements DishRecordService {
     public void orderDish(int orderNumber, String dishName, int dishNumber) {
         dishRecordDao.orderDish(orderNumber, dishName, dishNumber);
     }
+
+    @Override
+    public void deleteDish(int orderNumber, String dishName, int deleteNumber) {
+        dishRecordDao.orderDish(orderNumber, dishName, deleteNumber);
+    }
 }
