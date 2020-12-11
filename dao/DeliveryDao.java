@@ -13,5 +13,7 @@ public interface DeliveryDao {
 
     void finishOrder(int orderNumber);
 
-    List<Delivery> lookUpHistory(String deliveryMan);
+    List<Delivery> lookUpDeliverHistory(String deliveryMan);
+
+    List<Delivery> lookUpCustomerHistory(String account);
 }

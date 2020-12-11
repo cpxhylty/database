@@ -32,7 +32,6 @@ public class DeliveryDaoImpl implements DeliveryDao {
                 delivery.setAccount(resultSet.getString("account"));
                 delivery.setDeliveryMan(resultSet.getString("delivery_man"));
                 delivery.setPrice(resultSet.getFloat("price"));
-                delivery.setComment(resultSet.getString("comment"));
                 delivery.setAddress(resultSet.getString("address"));
                 delivery.setState(resultSet.getInt("state"));
                 res.add(delivery);
@@ -85,7 +84,6 @@ public class DeliveryDaoImpl implements DeliveryDao {
                 delivery.setAccount(resultSet.getString("account"));
                 delivery.setDeliveryMan(resultSet.getString("delivery_man"));
                 delivery.setPrice(resultSet.getFloat("price"));
-                delivery.setComment(resultSet.getString("comment"));
                 delivery.setAddress(resultSet.getString("address"));
                 delivery.setState(resultSet.getInt("state"));
                 res.add(delivery);
@@ -118,7 +116,7 @@ public class DeliveryDaoImpl implements DeliveryDao {
     }
 
     @Override
-    public List<Delivery> lookUpHistory(String deliveryMan) {
+    public List<Delivery> lookUpDeliverHistory(String deliveryMan) {
         ArrayList<Delivery> res = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -137,7 +135,39 @@ public class DeliveryDaoImpl implements DeliveryDao {
                 delivery.setAccount(resultSet.getString("account"));
                 delivery.setDeliveryMan(resultSet.getString("delivery_man"));
                 delivery.setPrice(resultSet.getFloat("price"));
-                delivery.setComment(resultSet.getString("comment"));
+                delivery.setAddress(resultSet.getString("address"));
+                delivery.setState(resultSet.getInt("state"));
+                res.add(delivery);
+            }
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            System.out.println("select fail!!");
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @Override
+    public List<Delivery> lookUpCustomerHistory(String account) {
+        ArrayList<Delivery> res = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "SELECT * FROM delivery where state=2 and account=?";
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.setString(1, account);
+            while (resultSet.next()) {
+                Delivery delivery = new Delivery();
+                delivery.setOrderNumber(resultSet.getInt("order_number"));
+                delivery.setTime(new Date(resultSet.getTimestamp("time").getTime()));
+                delivery.setAccount(resultSet.getString("account"));
+                delivery.setDeliveryMan(resultSet.getString("delivery_man"));
+                delivery.setPrice(resultSet.getFloat("price"));
                 delivery.setAddress(resultSet.getString("address"));
                 delivery.setState(resultSet.getInt("state"));
                 res.add(delivery);

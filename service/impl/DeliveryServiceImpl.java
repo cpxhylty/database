@@ -32,6 +32,6 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public List<Delivery> lookUpHistory(String deliveryMan) {
-        return deliveryDao.lookUpHistory(deliveryMan);
+        return deliveryDao.lookUpDeliverHistory(deliveryMan);
     }
 }

@@ -8,7 +8,6 @@ public class Delivery {
     private String account;
     private String deliveryMan;
     private float price;
-    private String comment;
     private String address;
     private int state;
 
@@ -50,14 +49,6 @@ public class Delivery {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public String getAddress() {

@@ -3,7 +3,7 @@ package pojo;
 import java.util.Date;
 
 public class Comment {
-    private int order_name;
+    private int orderNumber;
     private Date time;
     private int type;
     private String name;
@@ -30,8 +30,8 @@ public class Comment {
         this.content = content;
     }
 
-    public void setOrder_name(int order_name) {
-        this.order_name = order_name;
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public void setRating(int rating) {
@@ -46,8 +46,8 @@ public class Comment {
         return type;
     }
 
-    public int getOrder_name() {
-        return order_name;
+    public int getOrderNumber() {
+        return orderNumber;
     }
 
     public int getRating() {
