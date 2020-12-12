@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,24 +16,31 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
     UserService userService = new UserServiceImpl();
 
-    /*@Override
+    @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("operation").equals("select")) {
+        String operation = req.getParameter("operation");
+        if (operation.equals("add")) {
+            String account = req.getParameter("account");
+            String password = req.getParameter("password");
+            int type = Integer.parseInt(req.getParameter("type"));
 
-            List<User> users = userService.getUser();
+            userService.addUser(account, password, type);
 
-            System.out.println(req.getParameter("uname"));
-            System.out.println(req.getParameter("pwd"));
-
-            req.setAttribute("users", users);
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
-        } else {
-            String name = req.getParameter("user name");
-            int age = Integer.parseInt(req.getParameter("user age"));
-            int gender = Integer.parseInt(req.getParameter("user gender"));
-            userService.addUser(name,age,gender);
-            req.setAttribute("info","insert ok");
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
+            resp.sendRedirect("");
         }
-    }*/
+        else if (operation.equals("sign in")) {
+            String account = req.getParameter("account");
+            String password = req.getParameter("password");
+
+            int type = userService.signIn(account, password);
+
+            HttpSession session = req.getSession();
+            session.setAttribute("type", type);
+            if (type != -1) {
+                session.setAttribute("account", account);
+            }
+
+            resp.sendRedirect("");
+        }
+    }
 }

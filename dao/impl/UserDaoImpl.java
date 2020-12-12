@@ -90,4 +90,30 @@ public class UserDaoImpl implements UserDao {
         }
         return res;
     }
+
+    @Override
+    public int signIn(String account, String password) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int type = -1;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "SELECT * FROM user where account=? and password=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, account);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                type = resultSet.getInt("type");
+            }
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            System.out.println("select fail!!");
+            e.printStackTrace();
+        }
+        return type;
+    }
 }
