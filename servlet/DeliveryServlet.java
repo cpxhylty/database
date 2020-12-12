@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +64,30 @@ public class DeliveryServlet extends HttpServlet {
 
             HttpSession session = req.getSession();
             session.setAttribute("history", deliveries);
+
+            resp.sendRedirect("");
+        }
+        else if (operation.equals("make order")) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            Date time = null;
+            String account = req.getParameter("account");
+            float price = Float.parseFloat(req.getParameter("price"));
+            String address = req.getParameter("address");
+            int number = Integer.parseInt(req.getParameter("number"));
+            List<String> names = new ArrayList<>();
+            List<Integer> numbers = new ArrayList<>();
+            try {
+                time=sdf.parse(req.getParameter("time"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < number; i++) {
+                names.add(req.getParameter("name"+Integer.toString(i)));
+                numbers.add(Integer.parseInt(req.getParameter("number"+Integer.toString(i))));
+            }
+
+            deliveryService.makeOrder(time, account, price, address, number, names, numbers);
 
             resp.sendRedirect("");
         }

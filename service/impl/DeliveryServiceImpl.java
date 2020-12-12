@@ -5,6 +5,7 @@ import dao.impl.DeliveryDaoImpl;
 import pojo.Delivery;
 import service.DeliveryService;
 
+import java.util.Date;
 import java.util.List;
 
 public class DeliveryServiceImpl implements DeliveryService {
@@ -33,5 +34,10 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     public List<Delivery> lookUpHistory(String deliveryMan) {
         return deliveryDao.lookUpDeliverHistory(deliveryMan);
+    }
+
+    @Override
+    public void makeOrder(Date time, String account, float price, String address, int number, List<String> names, List<Integer> numbers) {
+        deliveryDao.makeOrder(time, account, price, address, number, names, numbers);
     }
 }

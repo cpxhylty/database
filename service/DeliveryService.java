@@ -2,6 +2,7 @@ package service;
 
 import pojo.Delivery;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DeliveryService {
@@ -14,4 +15,6 @@ public interface DeliveryService {
     void finishOrder(int orderNumber);
 
     List<Delivery> lookUpHistory(String deliveryMan);
+
+    void makeOrder(Date time, String account, float price, String address, int number, List<String> names, List<Integer> numbers);
 }

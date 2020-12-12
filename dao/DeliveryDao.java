@@ -2,6 +2,7 @@ package dao;
 
 import pojo.Delivery;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DeliveryDao {
@@ -16,4 +17,6 @@ public interface DeliveryDao {
     List<Delivery> lookUpDeliverHistory(String deliveryMan);
 
     List<Delivery> lookUpCustomerHistory(String account);
+
+    void makeOrder(Date time, String account, float price, String address, int number, List<String> names, List<Integer> numbers);
 }
