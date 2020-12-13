@@ -3,14 +3,14 @@ package pojo;
 public class Staff {
     private String account;
     private String name;
-    private String salary;
+    private float salary;
     private int type;
 
     public Staff() {
 
     }
 
-    public Staff(String account,String name,String salary,int type) {
+    public Staff(String account,String name,float salary,int type) {
         this.account = account;
         this.name = name;
         this.salary = salary;
@@ -29,7 +29,7 @@ public class Staff {
         this.name = name;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(float salary) {
         this.salary = salary;
     }
 
@@ -45,7 +45,7 @@ public class Staff {
         return name;
     }
 
-    public String getSalary() {
+    public float getSalary() {
         return salary;
     }
 }

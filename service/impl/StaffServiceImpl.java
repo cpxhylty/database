@@ -18,7 +18,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public void addStaffService(String account, String name, String salary, int type) {
+    public void addStaffService(String account, String name, float salary, int type) {
         staffDao.addStaff(account, name, salary, type);
     }
 

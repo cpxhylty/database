@@ -28,7 +28,7 @@ public class StaffDaoImpl implements StaffDao {
                 staff = new Staff();
                 staff.setAccount(resultSet.getString("account"));
                 staff.setName(resultSet.getString("name"));
-                staff.setSalary(resultSet.getString("salary"));
+                staff.setSalary(resultSet.getFloat("salary"));
                 staff.setType(resultSet.getInt("type"));
             }
             preparedStatement.close();
@@ -40,7 +40,7 @@ public class StaffDaoImpl implements StaffDao {
     }
 
     @Override
-    public void addStaff(String account, String name, String salary, int type) {
+    public void addStaff(String account, String name, float salary, int type) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -51,7 +51,7 @@ public class StaffDaoImpl implements StaffDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,account);
             preparedStatement.setString(2,name);
-            preparedStatement.setString(3,salary);
+            preparedStatement.setFloat(3,salary);
             preparedStatement.setInt(4,type);
             int res = preparedStatement.executeUpdate();
             System.out.println("insert success!!");
@@ -83,7 +83,7 @@ public class StaffDaoImpl implements StaffDao {
                 Staff staff = new Staff();
                 staff.setAccount(resultSet.getString("account"));
                 staff.setName(resultSet.getString("name"));
-                staff.setSalary(resultSet.getString("salary"));
+                staff.setSalary(resultSet.getFloat("salary"));
                 staff.setType(resultSet.getInt("type"));
                 res.add(staff);
             }
