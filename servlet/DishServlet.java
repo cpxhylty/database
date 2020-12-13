@@ -18,15 +18,13 @@ public class DishServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String operation = req.getParameter("operation");
+        HttpSession session = req.getSession();
+        String operation = (String)session.getAttribute("operation");
         if (operation.equals("get menu")) {
-
             Menu menu = dishService.getAllDish();
 
-            HttpSession session = req.getSession();
             session.setAttribute("menu", menu);
-
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/dish.jsp");
         }
     }
 }

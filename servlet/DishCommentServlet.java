@@ -21,7 +21,7 @@ public class DishCommentServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String operation = req.getParameter("operation");
+        String operation = (String) req.getSession().getAttribute("operation");
         if (operation.equals("get all")) {
 
             List<DishComment> dishComments = dishCommentService.getAllDishComments();
@@ -29,7 +29,7 @@ public class DishCommentServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("dish comments", dishComments);
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/staff/cook-admin-evaluate.jsp");
         }
         else if (operation.equals("search")) {
             String account = req.getParameter("account");

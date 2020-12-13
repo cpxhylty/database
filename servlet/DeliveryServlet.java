@@ -22,15 +22,15 @@ public class DeliveryServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String operation = req.getParameter("operation");
+        String operation = (String) req.getSession().getAttribute("operation");
+        System.out.println(operation);
         if (operation.equals("not arranged")) {
-
             List<Delivery> deliveries = deliveryService.searchNotArranged();
 
             HttpSession session = req.getSession();
             session.setAttribute("not arranged", deliveries);
-
-            resp.sendRedirect("");
+            System.out.println("ok");
+            resp.sendRedirect("/db_war_exploded/staff/delivery-admin-begin.jsp");
         }
         else if (operation.equals("take order")) {
             int orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
@@ -41,14 +41,13 @@ public class DeliveryServlet extends HttpServlet {
             resp.sendRedirect("");
         }
         else if (operation.equals("in delivery")) {
-            String deliveryMan = req.getParameter("deliveryMan");
-
+            String deliveryMan = (String) req.getSession().getAttribute("account");
             List<Delivery> deliveries = deliveryService.searchInDelivery(deliveryMan);
 
             HttpSession session = req.getSession();
             session.setAttribute("in delivery", deliveries);
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/staff/delivery-admin-waiting.jsp");
         }
         else if (operation.equals("finish")) {
             int orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
@@ -58,14 +57,14 @@ public class DeliveryServlet extends HttpServlet {
             resp.sendRedirect("");
         }
         else if (operation.equals("history")) {
-            String deliveryMan = req.getParameter("deliveryMan");
+            String deliveryMan = (String) req.getSession().getAttribute("account");
 
             List<Delivery> deliveries = deliveryService.lookUpHistory(deliveryMan);
 
             HttpSession session = req.getSession();
             session.setAttribute("history", deliveries);
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/staff/delivery-admin-complete.jsp");
         }
         else if (operation.equals("make order")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

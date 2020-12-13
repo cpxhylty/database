@@ -21,7 +21,7 @@ public class CommentServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String operation = req.getParameter("operation");
+        String operation = (String) req.getSession().getAttribute("operation");
         if (operation.equals("get all")) {
 
             List<Comment> comments = commentService.getAllComments();

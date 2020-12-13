@@ -74,8 +74,8 @@ public class DeliveryDaoImpl implements DeliveryDao {
             connection = DriverManager.getConnection(url,"root","root");
             String sql = "SELECT * FROM delivery where state=1 and delivery_man=?";
             preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
             preparedStatement.setString(1, deliveryMan);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Delivery delivery = new Delivery();
                 delivery.setOrderNumber(resultSet.getInt("order_number"));
@@ -90,7 +90,7 @@ public class DeliveryDaoImpl implements DeliveryDao {
             preparedStatement.close();
             resultSet.close();
         } catch (Exception e) {
-            System.out.println("select fail!!");
+            System.out.println("select in delivery fail!!");
             e.printStackTrace();
         }
         return res;

@@ -25,8 +25,9 @@ public class UserServlet extends HttpServlet {
             int type = Integer.parseInt(req.getParameter("type"));
 
             userService.addUser(account, password, type);
+            req.getSession().setAttribute("type",0);
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/login.jsp");
         }
         else if (operation.equals("sign in")) {
             String account = req.getParameter("account");
@@ -40,7 +41,7 @@ public class UserServlet extends HttpServlet {
                 session.setAttribute("account", account);
             }
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/login.jsp");
         }
     }
 }

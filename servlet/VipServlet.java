@@ -22,8 +22,10 @@ public class VipServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String operation = req.getParameter("operation");
+        String operation = (String) req.getSession().getAttribute("operation");
+        String operation1 = req.getParameter("operation");
         if (operation.equals("get all")) {
+            System.out.println("in vip get all");
 
             List<Vip> vips = vipService.getAllVips();
 
@@ -31,8 +33,7 @@ public class VipServlet extends HttpServlet {
             session.setAttribute("vips", vips);
 
             resp.sendRedirect("");
-        }
-        else if (operation.equals("search")) {
+        } else if (operation.equals("search")) {
             String account = req.getParameter("account");
 
             List<Vip> vips = vipService.searchByAccount(account);
@@ -45,7 +46,7 @@ public class VipServlet extends HttpServlet {
         else if (operation.equals("add")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            String account = req.getParameter("account");
+            String account = (String) req.getSession().getAttribute("account");
             Date registerTime = null;
             Date endTime = null;
             try {
