@@ -22,17 +22,15 @@ public class VipServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String operation = (String) req.getSession().getAttribute("operation");
-        String operation1 = req.getParameter("operation");
+        String operation =  req.getParameter("operation");
         if (operation.equals("get all")) {
-            System.out.println("in vip get all");
 
             List<Vip> vips = vipService.getAllVips();
 
             HttpSession session = req.getSession();
             session.setAttribute("vips", vips);
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/staff/waiter-admin-vip.jsp");
         } else if (operation.equals("search")) {
             String account = req.getParameter("account");
 
@@ -46,7 +44,7 @@ public class VipServlet extends HttpServlet {
         else if (operation.equals("add")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            String account = (String) req.getSession().getAttribute("account");
+            String account = req.getParameter("account");
             Date registerTime = null;
             Date endTime = null;
             try {
@@ -57,16 +55,27 @@ public class VipServlet extends HttpServlet {
             }
             float money = Float.parseFloat(req.getParameter("money"));
 
+
             vipService.addVip(account, registerTime, endTime, money);
 
-            resp.sendRedirect("");
+            List<Vip> vips = vipService.getAllVips();
+
+            HttpSession session = req.getSession();
+            session.setAttribute("vips", vips);
+
+            resp.sendRedirect("/db_war_exploded/staff/waiter-admin-vip.jsp");
         }
         else if (operation.equals("delete")) {
             String account = req.getParameter("account");
 
             vipService.deleteVip(account);
 
-            resp.sendRedirect("");
+            List<Vip> vips = vipService.getAllVips();
+
+            HttpSession session = req.getSession();
+            session.setAttribute("vips", vips);
+
+            resp.sendRedirect("/db_war_exploded/staff/waiter-admin-vip.jsp");
         }
     }
 }

@@ -13,4 +13,8 @@ public class Menu {
     public void addDishes(List<Dish> dishes) {
         menu.add(dishes);
     }
+
+    public List<List<Dish>> getMenu() {
+        return menu;
+    }
 }

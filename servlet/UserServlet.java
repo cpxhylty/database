@@ -30,6 +30,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String operation = req.getParameter("operation");
+        System.out.println(operation);
         if (operation.equals("add staff")) {
 
             String account = req.getParameter("account");
@@ -88,7 +89,7 @@ public class UserServlet extends HttpServlet {
             while (enumeration.hasMoreElements()) {
                 session.removeAttribute(enumeration.nextElement().toString());
             }
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/index.jsp");
         }
     }
 }

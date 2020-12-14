@@ -22,23 +22,27 @@ public class DeliveryServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String operation = (String) req.getSession().getAttribute("operation");
-        System.out.println(operation);
+        String operation = (String) req.getParameter("operation");
         if (operation.equals("not arranged")) {
             List<Delivery> deliveries = deliveryService.searchNotArranged();
 
             HttpSession session = req.getSession();
             session.setAttribute("not arranged", deliveries);
-            System.out.println("ok");
             resp.sendRedirect("/db_war_exploded/staff/delivery-admin-begin.jsp");
         }
         else if (operation.equals("take order")) {
             int orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
-            String deliveryMan = req.getParameter("deliveryMan");
+            String deliveryMan = (String) req.getSession().getAttribute("account");
 
             deliveryService.takeOrder(orderNumber, deliveryMan);
 
-            resp.sendRedirect("");
+            List<Delivery> deliveries = deliveryService.searchNotArranged();
+            HttpSession session = req.getSession();
+            session.setAttribute("not arranged", deliveries);
+
+            System.out.println("take order");
+
+            resp.sendRedirect("/db_war_exploded/staff/delivery-admin-begin.jsp");
         }
         else if (operation.equals("in delivery")) {
             String deliveryMan = (String) req.getSession().getAttribute("account");
@@ -54,7 +58,13 @@ public class DeliveryServlet extends HttpServlet {
 
             deliveryService.finishOrder(orderNumber);
 
-            resp.sendRedirect("");
+            String deliveryMan = (String) req.getSession().getAttribute("account");
+            List<Delivery> deliveries = deliveryService.searchInDelivery(deliveryMan);
+
+            HttpSession session = req.getSession();
+            session.setAttribute("in delivery", deliveries);
+
+            resp.sendRedirect("/db_war_exploded/staff/delivery-admin-waiting.jsp");
         }
         else if (operation.equals("history")) {
             String deliveryMan = (String) req.getSession().getAttribute("account");
@@ -89,6 +99,9 @@ public class DeliveryServlet extends HttpServlet {
             deliveryService.makeOrder(time, account, price, address, number, names, numbers);
 
             resp.sendRedirect("");
+        }
+        else if (operation.equals("home")) {
+            resp.sendRedirect("/db_war_exploded/staff/delivery-admin.jsp");
         }
     }
 }

@@ -24,7 +24,7 @@ public class SeatServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("seats", seats);
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/staff/waiter-admin-reserve.jsp");
         }
         else if (operation.equals("start")) {
             int seatNumber = Integer.parseInt(req.getParameter("seatNumber"));

@@ -21,7 +21,7 @@ public class CommentServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String operation = (String) req.getSession().getAttribute("operation");
+        String operation = req.getParameter("operation");
         if (operation.equals("get all")) {
 
             List<Comment> comments = commentService.getAllComments();
@@ -29,7 +29,7 @@ public class CommentServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("comments", comments);
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/staff/waiter-admin-evaluate.jsp");
         }
         else if (operation.equals("search")) {
             int orderNumber = Integer.parseInt(req.getParameter("orderNumber"));

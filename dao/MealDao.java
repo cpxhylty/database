@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface MealDao {
     List<Meal> findMealByAccount(String account);
+
+    List<Meal> getAll();
 }

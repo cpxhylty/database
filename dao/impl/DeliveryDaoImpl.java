@@ -52,10 +52,11 @@ public class DeliveryDaoImpl implements DeliveryDao {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
             connection = DriverManager.getConnection(url,"root","root");
-            String sql = "update delivery set state=1, delivery_man=? where order_number=? and delivery_man is null";
+            String sql = "update delivery set state=1, delivery_man=? where order_number=? and delivery_man=''";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, deliveryMan);
             preparedStatement.setInt(2, orderNumber);
+            System.out.println(deliveryMan + " " + orderNumber);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (Exception e) {
@@ -191,13 +192,14 @@ public class DeliveryDaoImpl implements DeliveryDao {
             connection = DriverManager.getConnection(url,"root","root");
             orderNumber--;
             String sql = "insert into delivery " +
-                    "values (?, ?, ?, null, ?, ?, 0)";
+                    "values (?, ?, ?, ?, ?, ?, 0)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, orderNumber);
             preparedStatement.setTimestamp(2, new Timestamp(time.getTime()));
             preparedStatement.setString(3, account);
-            preparedStatement.setFloat(4, price);
-            preparedStatement.setString(5, address);
+            preparedStatement.setString(4,"");
+            preparedStatement.setFloat(5, price);
+            preparedStatement.setString(6, address);
             preparedStatement.executeUpdate();
             preparedStatement.close();
             sql = "insert into dish_record values (?, ?, ?)";
