@@ -46,7 +46,7 @@ public class SeatDaoImpl implements SeatDao {
     }
 
     @Override
-    public void startMeal(int seatNumber) {
+    public void startMeal(int seatNumber, String waiter, String account, Date date) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -54,10 +54,22 @@ public class SeatDaoImpl implements SeatDao {
             String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
             connection = DriverManager.getConnection(url,"root","root");
             orderNumber++;
+            int order_now = orderNumber;
             String sql = "update seat set state=1, order_number=? where seat_number=?";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, orderNumber);
+            preparedStatement.setInt(1, order_now);
             preparedStatement.setInt(2, seatNumber);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            String sql2 = "insert into meal values (?, ?, ?, ?, ?, ?)";
+            preparedStatement = connection.prepareStatement(sql2);
+            preparedStatement.setInt(1, order_now);
+            preparedStatement.setFloat(2, 0);
+            preparedStatement.setString(3, waiter);
+            preparedStatement.setInt(4, seatNumber);
+            preparedStatement.setString(5, account);
+            preparedStatement.setDate(6, new java.sql.Date(date.getTime()));
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (Exception e) {

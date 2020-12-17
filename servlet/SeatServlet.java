@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class SeatServlet extends HttpServlet {
@@ -27,9 +30,20 @@ public class SeatServlet extends HttpServlet {
             resp.sendRedirect("/db_war_exploded/staff/waiter-admin-reserve.jsp");
         }
         else if (operation.equals("start")) {
-            int seatNumber = Integer.parseInt(req.getParameter("seatNumber"));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-            seatService.startMeal(seatNumber);
+            int seatNumber = Integer.parseInt(req.getParameter("seatNumber"));
+            String waiter = req.getParameter("waiter");
+            String account = req.getParameter("account");
+            Date date = null;
+
+            try {
+                date = sdf.parse(req.getParameter("date"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            seatService.startMeal(seatNumber, waiter, account, date);
 
             resp.sendRedirect("");
         }
