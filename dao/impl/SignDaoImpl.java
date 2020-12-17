@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SignDaoImpl implements SignDao {
@@ -37,7 +38,7 @@ public class SignDaoImpl implements SignDao {
     }
 
     @Override
-    public void addSign(String account, int date) {
+    public void addSign(String account, Date date) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -47,7 +48,7 @@ public class SignDaoImpl implements SignDao {
             String sql = "insert into sign values (?, ?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,account);
-            preparedStatement.setInt(2, date);
+            preparedStatement.setDate(2, new java.sql.Date(date.getTime()));
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (Exception e) {
@@ -69,17 +70,17 @@ public class SignDaoImpl implements SignDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,staff.getAccount());
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 staffSign = new StaffSign();
-                staffSign.setDay(resultSet.getInt("day"));
                 staffSign.setDate(resultSet.getDate("date"));
                 staffSign.setStaff(staff);
+                staffSignList.add(staffSign);
             }
             preparedStatement.close();
             resultSet.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return staffSignList;
     }
 }

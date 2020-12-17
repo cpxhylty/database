@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SignServlet extends HttpServlet {
     SignService signService = new SignServiceImpl();
@@ -17,7 +20,14 @@ public class SignServlet extends HttpServlet {
         String operation = req.getParameter("operation");
         if (operation.equals("add")) {
             String account = req.getParameter("account");
-            int date = Integer.parseInt(req.getParameter("date"));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date date = null;
+            try {
+                date = sdf.parse(req.getParameter("date"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             signService.addSign(account, date);
 
