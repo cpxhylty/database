@@ -33,7 +33,7 @@ public class MealDaoImpl implements MealDao {
                 meal.setWaiter(resultSet.getString("waiter"));
                 meal.setSeatNumber(resultSet.getInt("seat_number"));
                 meal.setUser(resultSet.getString("account"));
-                meal.setDate(new Date(resultSet.getDate("date").getTime()));
+                meal.setDate(resultSet.getDate("date"));
                 meals.add(meal);
             }
             preparedStatement.close();
@@ -63,7 +63,7 @@ public class MealDaoImpl implements MealDao {
                 meal.setWaiter(resultSet.getString("waiter"));
                 meal.setSeatNumber(resultSet.getInt("seat_number"));
                 meal.setUser(resultSet.getString("account"));
-                meal.setDate(new Date(resultSet.getDate("date").getTime()));
+                meal.setDate(resultSet.getDate("date"));
                 meals.add(meal);
             }
             preparedStatement.close();
