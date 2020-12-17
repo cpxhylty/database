@@ -17,7 +17,7 @@ public class MealDaoImpl implements MealDao {
     public List<Meal> findMealByAccount(String account) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        List<Meal> meals = null;
+        List<Meal> meals = new ArrayList<>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
@@ -32,7 +32,7 @@ public class MealDaoImpl implements MealDao {
                 meal.setPrice(resultSet.getFloat("price"));
                 meal.setWaiter(resultSet.getString("waiter"));
                 meal.setSeatNumber(resultSet.getInt("seat_number"));
-                meal.setUser(resultSet.getString("user"));
+                meal.setUser(resultSet.getString("account"));
                 meals.add(meal);
             }
             preparedStatement.close();

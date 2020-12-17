@@ -74,6 +74,7 @@ public class UserServlet extends HttpServlet {
                 session.setAttribute("account", account);
                 if (type == 0) {
                     session.setAttribute("customer", customerService.findCustomerByAccount(account));
+                    System.out.println("aaa");
                 }
                 else if (1 <= type && type <= 4) {
                     session.setAttribute("staff", staffService.findStaffByAccountService(account));

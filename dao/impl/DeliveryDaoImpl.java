@@ -191,10 +191,11 @@ public class DeliveryDaoImpl implements DeliveryDao {
             String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
             connection = DriverManager.getConnection(url,"root","root");
             orderNumber--;
+            int order_now = orderNumber;
             String sql = "insert into delivery " +
                     "values (?, ?, ?, ?, ?, ?, 0)";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, orderNumber);
+            preparedStatement.setInt(1, order_now);
             preparedStatement.setTimestamp(2, new Timestamp(time.getTime()));
             preparedStatement.setString(3, account);
             preparedStatement.setString(4,"");
@@ -207,7 +208,7 @@ public class DeliveryDaoImpl implements DeliveryDao {
             for (int i = 0; i < number; i++) {
                 String nameNow = names.get(i);
                 int numberNow = numbers.get(i);
-                preparedStatement.setInt(1, orderNumber);
+                preparedStatement.setInt(1, order_now);
                 preparedStatement.setString(2, nameNow);
                 preparedStatement.setInt(3, numberNow);
                 preparedStatement.executeUpdate();

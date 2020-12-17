@@ -44,6 +44,13 @@ public class CommentServlet extends HttpServlet {
         else if (operation.equals("add")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+            System.out.println(req.getParameter("orderNumber"));
+            System.out.println(req.getParameter("type"));
+            System.out.println(req.getParameter("name"));
+            System.out.println(req.getParameter("content"));
+            System.out.println(req.getParameter("rating"));
+            System.out.println(req.getParameter("time"));
+
             int orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
             int type = Integer.parseInt(req.getParameter("type"));
             String name = req.getParameter("name");
@@ -58,7 +65,7 @@ public class CommentServlet extends HttpServlet {
 
             commentService.addComment(orderNumber, type, name, content, rating, time);
 
-            resp.sendRedirect("");
+            resp.sendRedirect("/db_war_exploded/user/info.jsp");
         }
         else if (operation.equals("update")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
