@@ -30,6 +30,10 @@ public class Meal {
         return waiter;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public void setWaiter(String waiter) {
         this.waiter = waiter;
     }
