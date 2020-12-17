@@ -71,4 +71,28 @@ public class MealDaoImpl implements MealDao {
         }
         return meals;
     }
+
+    @Override
+    public int getAllMealNum() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int row = 0;
+        List<Meal> meals = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "SELECT count(*) FROM meal";
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            row = resultSet.getInt(1);
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            System.out.println("select fail!!");
+            e.printStackTrace();
+        }
+        return row;
+    }
 }

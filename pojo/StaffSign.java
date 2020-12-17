@@ -1,8 +1,11 @@
 package pojo;
 
+import java.util.Date;
+
 public class StaffSign {
     private Staff staff;
     private int day;
+    private Date date;
 
     public StaffSign() {
 
@@ -22,5 +25,13 @@ public class StaffSign {
 
     public void setStaff(Staff staff) {
         this.staff = staff;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

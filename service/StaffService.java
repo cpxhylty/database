@@ -12,4 +12,6 @@ public interface StaffService {
     void deleteStaffService(String account);
 
     List<Staff> getAllStaffService();
+
+    void changeSalary(String newSalary,String account);
 }

@@ -219,4 +219,59 @@ public class DeliveryDaoImpl implements DeliveryDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public int getDeliveryNum() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int row = 0;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "SELECT count(*) FROM delivery";
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            row = resultSet.getInt(1);
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            System.out.println("select fail!!");
+            e.printStackTrace();
+        }
+        return row;
+    }
+
+    @Override
+    public List<Delivery> getAllDelivery() {
+        ArrayList<Delivery> res = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "SELECT * FROM delivery";
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Delivery delivery = new Delivery();
+                delivery.setOrderNumber(resultSet.getInt("order_number"));
+                delivery.setTime(new Date(resultSet.getTimestamp("time").getTime()));
+                delivery.setAccount(resultSet.getString("account"));
+                delivery.setDeliveryMan(resultSet.getString("delivery_man"));
+                delivery.setPrice(resultSet.getFloat("price"));
+                delivery.setAddress(resultSet.getString("address"));
+                delivery.setState(resultSet.getInt("state"));
+                res.add(delivery);
+            }
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            System.out.println("select fail!!");
+            e.printStackTrace();
+        }
+        return res;
+    }
 }

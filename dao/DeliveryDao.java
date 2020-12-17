@@ -19,4 +19,8 @@ public interface DeliveryDao {
     List<Delivery> lookUpCustomerHistory(String account);
 
     void makeOrder(Date time, String account, float price, String address, int number, List<String> names, List<Integer> numbers);
+
+    int getDeliveryNum();
+
+    List<Delivery> getAllDelivery();
 }

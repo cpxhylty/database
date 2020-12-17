@@ -14,4 +14,6 @@ public interface ReserveDao {
     List<Reserve> getReservesByDate(int month, int day);
 
     void deleteReserve(int month, int day, int type, int seatNumber);
+
+    int getReservesNum();
 }

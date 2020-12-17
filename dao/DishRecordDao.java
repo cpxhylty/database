@@ -10,4 +10,6 @@ public interface DishRecordDao {
     void deleteDish(int orderNumber, String dishName, int deleteNumber);
 
     List<DishRecord> searchByOrderNumber(int orderNumber);
+
+    List<DishRecord> getAllDishRecord();
 }

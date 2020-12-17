@@ -32,4 +32,9 @@ public class StaffServiceImpl implements StaffService {
         List<Staff> staffs = staffDao.getAllStaff();
         return staffs;
     }
+
+    @Override
+    public void changeSalary(String newSalary,String account) {
+
+    }
 }

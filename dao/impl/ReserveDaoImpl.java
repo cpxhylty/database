@@ -145,4 +145,27 @@ public class ReserveDaoImpl implements ReserveDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public int getReservesNum() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        int row = 0;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "select count(*) from reserve";
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            row = resultSet.getInt(1);
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            System.out.println("select fail!!");
+            e.printStackTrace();
+        }
+        return row;
+    }
 }

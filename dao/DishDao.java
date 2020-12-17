@@ -15,4 +15,8 @@ public interface DishDao {
     Menu getAllDish();
 
     void updateDish(String name,float price,int surplus,float vipPrice,String url);
+
+    List<Dish> getDishes();
+
+    void changeDishPrice(String name,float price,int surplus,float vipPrice);
 }

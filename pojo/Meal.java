@@ -1,11 +1,14 @@
 package pojo;
 
+import java.util.Date;
+
 public class Meal {
     private int orderNumber;
     private float price;
     private String waiter;
     private int seatNumber;
     private String user;
+    private Date date;
 
     public int getOrderNumber() {
         return orderNumber;
@@ -45,5 +48,9 @@ public class Meal {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

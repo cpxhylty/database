@@ -1,12 +1,13 @@
 package pojo;
 
-public class Dish {
+public class Dish implements Comparable<Dish>{
     private String name;
     private float price;
     private int surplus;
     private float vipPrice;
     private String url;
     private int type;
+    private int salesNum = 0;
 
     public String getName() {
         return name;
@@ -54,5 +55,15 @@ public class Dish {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public void addSales() {this.salesNum++;}
+
+    public int getSalesNum(){return this.salesNum;
+    }
+
+    public int compareTo(Dish o) {
+        int result1 = this.getSalesNum() - o.getSalesNum();
+        return result1;
     }
 }

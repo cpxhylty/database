@@ -81,4 +81,32 @@ public class DishRecordDaoImpl implements DishRecordDao {
         }
         return res;
     }
+
+    @Override
+    public List<DishRecord> getAllDishRecord() {
+        ArrayList<DishRecord> res = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "SELECT * FROM dish_record";
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                DishRecord dishRecord = new DishRecord();
+                dishRecord.setOrderNumber(resultSet.getInt("order_number"));
+                dishRecord.setDishName(resultSet.getString("dish_name"));
+                dishRecord.setDishNumber(resultSet.getInt("dish_number"));
+                res.add(dishRecord);
+            }
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            System.out.println("select fail!!");
+            e.printStackTrace();
+        }
+        return res;
+    }
 }

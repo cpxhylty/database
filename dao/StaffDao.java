@@ -12,4 +12,6 @@ public interface StaffDao {
     void deleteStaff(String account);
 
     List<Staff> getAllStaff();
+
+    void changeSalary(String salary,String account);
 }

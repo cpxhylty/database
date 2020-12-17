@@ -94,4 +94,24 @@ public class StaffDaoImpl implements StaffDao {
         }
         return res;
     }
+
+    @Override
+    public void changeSalary(String salary, String account) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "update staff set salary = ? where account = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setFloat(1,Float.parseFloat(salary));
+            preparedStatement.setString(2,account);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
