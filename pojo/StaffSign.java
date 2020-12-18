@@ -4,10 +4,18 @@ import java.util.Date;
 
 public class StaffSign {
     private Staff staff;
-    private Date date;
+    private int day;
 
     public StaffSign() {
 
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
     }
 
     public Staff getStaff() {
@@ -18,11 +26,4 @@ public class StaffSign {
         this.staff = staff;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 }

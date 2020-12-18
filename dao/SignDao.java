@@ -11,5 +11,5 @@ public interface SignDao {
 
     void addSign(String account, Date date);
 
-    List<StaffSign> getSignByStaff(Staff staff);
+    /*List<StaffSign> getSignByStaff(Staff staff);*/
 }

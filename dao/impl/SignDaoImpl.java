@@ -56,7 +56,7 @@ public class SignDaoImpl implements SignDao {
         }
     }
 
-    @Override
+    /*@Override
     public List<StaffSign> getSignByStaff(Staff staff) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -72,7 +72,7 @@ public class SignDaoImpl implements SignDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 staffSign = new StaffSign();
-                staffSign.setDate(resultSet.getDate("date"));
+                staffSign.setDay(resultSet.getInt("day"));
                 staffSign.setStaff(staff);
                 staffSignList.add(staffSign);
             }
@@ -82,5 +82,5 @@ public class SignDaoImpl implements SignDao {
             e.printStackTrace();
         }
         return staffSignList;
-    }
+    }*/
 }
