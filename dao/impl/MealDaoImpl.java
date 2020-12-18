@@ -97,4 +97,45 @@ public class MealDaoImpl implements MealDao {
         }
         return row;
     }
+
+    @Override
+    public float countPrice(int orderNumber) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        float price = 0;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql1 = "SELECT * FROM vip where account in (select account from meal where order_number=?)";
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setInt(1, orderNumber);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String sql2;
+            if (resultSet.next()) { //is VIP
+                resultSet.close();
+                sql2 = "select sum(vip_price) as total_price from dish where name in (select * from dish_record where order_number=?)";
+            }
+            else { //not VIP
+                resultSet.close();
+                sql2 = "select sum(price) as total_price from dish where name in (select * from dish_record where order_number=?)";
+            }
+            preparedStatement = connection.prepareStatement(sql2);
+            preparedStatement.setInt(1, orderNumber);
+            resultSet = preparedStatement.executeQuery();
+            price = resultSet.getFloat("total_price");
+            resultSet.close();
+            String sql3 = "update meal set price=? where order_number=?";
+            preparedStatement = connection.prepareStatement(sql3);
+            preparedStatement.setFloat(1, price);
+            preparedStatement.setInt(2, orderNumber);
+            preparedStatement.executeUpdate();
+            resultSet.close();
+            preparedStatement.close();
+        } catch (Exception e) {
+            System.out.println("count fail!!");
+            e.printStackTrace();
+        }
+        return price;
+    }
 }

@@ -24,5 +24,15 @@ public class MealServlet extends HttpServlet {
             session.setAttribute("meals",meals);
             resp.sendRedirect("/db_war_exploded/staff/waiter-admin-list.jsp");
         }
+        else if (operation.equals("count price")) {
+            int orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
+
+            float price = mealService.countPrice(orderNumber);
+
+            HttpSession session = req.getSession();
+            session.setAttribute("price", price);
+
+            resp.sendRedirect("");
+        }
     }
 }

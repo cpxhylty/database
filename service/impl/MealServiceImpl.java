@@ -13,4 +13,9 @@ public class MealServiceImpl implements service.MealService {
     public List<Meal> getAllMeal() {
         return mealDao.getAll();
     }
+
+    @Override
+    public float countPrice(int orderNumber) {
+        return mealDao.countPrice(orderNumber);
+    }
 }

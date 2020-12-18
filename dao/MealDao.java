@@ -10,4 +10,6 @@ public interface MealDao {
     List<Meal> getAll();
 
     int getAllMealNum();
+
+    float countPrice(int orderNumber);
 }
