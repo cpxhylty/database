@@ -109,4 +109,44 @@ public class VipDaoImpl implements VipDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void increaseMoney(String account, float money) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "update vip set money=money+? where account=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setFloat(1, money);
+            preparedStatement.setString(2, account);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (Exception e) {
+            System.out.println("increase fail!!");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void decreaseMoney(String account, float money) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
+            connection = DriverManager.getConnection(url,"root","root");
+            String sql = "update vip set money=money-? where account=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setFloat(1, money);
+            preparedStatement.setString(2, account);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (Exception e) {
+            System.out.println("decrease fail!!");
+            e.printStackTrace();
+        }
+    }
 }

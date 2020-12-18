@@ -77,5 +77,21 @@ public class VipServlet extends HttpServlet {
 
             resp.sendRedirect("/db_war_exploded/staff/waiter-admin-vip.jsp");
         }
+        else if (operation.equals("increase")) {
+            String account = req.getParameter("account");
+            float money = Float.parseFloat(req.getParameter("money"));
+
+            vipService.increaseMoney(account, money);
+
+            resp.sendRedirect("");
+        }
+        else if (operation.equals("decrease")) {
+            String account = req.getParameter("account");
+            float money = Float.parseFloat(req.getParameter("money"));
+
+            vipService.decreaseMoney(account, money);
+
+            resp.sendRedirect("");
+        }
     }
 }

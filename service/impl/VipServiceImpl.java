@@ -30,4 +30,14 @@ public class VipServiceImpl implements VipService {
     public void deleteVip(String account) {
         vipDao.deleteVip(account);
     }
+
+    @Override
+    public void increaseMoney(String account, float money) {
+        vipDao.increaseMoney(account, money);
+    }
+
+    @Override
+    public void decreaseMoney(String account, float money) {
+        vipDao.decreaseMoney(account, money);
+    }
 }
