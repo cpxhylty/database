@@ -4,10 +4,7 @@ import dao.SeatDao;
 import pojo.DishComment;
 import pojo.Seat;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,7 +52,7 @@ public class SeatDaoImpl implements SeatDao {
             connection = DriverManager.getConnection(url,"root","root");
             orderNumber++;
             int order_now = orderNumber;
-            String sql = "update seat set state=1, order_number=? where seat_number=?";
+            /*String sql = "update seat set state=1, order_number=? where seat_number=?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, order_now);
             preparedStatement.setInt(2, seatNumber);
@@ -71,7 +68,17 @@ public class SeatDaoImpl implements SeatDao {
             preparedStatement.setString(5, account);
             preparedStatement.setDate(6, new java.sql.Date(date.getTime()));
             preparedStatement.executeUpdate();
-            preparedStatement.close();
+            preparedStatement.close();*/
+            String sql = "{?=call start_meal(?, ?, ?, ?, ?, ?)}";
+            CallableStatement callableStatement = connection.prepareCall(sql);
+            callableStatement.setInt(1, order_now);
+            callableStatement.setFloat(2, 0);
+            callableStatement.setString(3, waiter);
+            callableStatement.setInt(4, seatNumber);
+            callableStatement.setString(5, account);
+            callableStatement.setDate(6, new java.sql.Date(date.getTime()));
+            callableStatement.execute();
+            callableStatement.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

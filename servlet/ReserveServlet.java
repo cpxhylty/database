@@ -39,6 +39,11 @@ public class ReserveServlet extends HttpServlet {
 
             reserveService.createReservation(account, month, day, type, seatNumber);
 
+            HttpSession session = req.getSession();
+            session.setAttribute("month", month);
+            session.setAttribute("day", day);
+            session.setAttribute("type", type);
+
             resp.sendRedirect("");
         }
         else if (operation.equals("get all")) {

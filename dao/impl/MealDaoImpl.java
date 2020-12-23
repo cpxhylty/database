@@ -4,10 +4,7 @@ import dao.MealDao;
 import pojo.Comment;
 import pojo.Meal;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,7 +104,7 @@ public class MealDaoImpl implements MealDao {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/cygl?serverTimezone=UTC";
             connection = DriverManager.getConnection(url,"root","root");
-            String sql1 = "SELECT * FROM vip where account in (select account from meal where order_number=?)";
+            /*String sql1 = "SELECT * FROM vip where account in (select account from meal where order_number=?)";
             preparedStatement = connection.prepareStatement(sql1);
             preparedStatement.setInt(1, orderNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -131,7 +128,15 @@ public class MealDaoImpl implements MealDao {
             preparedStatement.setInt(2, orderNumber);
             preparedStatement.executeUpdate();
             resultSet.close();
-            preparedStatement.close();
+            preparedStatement.close();*/
+            String sql = "{call count_price(?)}";
+            CallableStatement callableStatement = connection.prepareCall(sql);
+            callableStatement.setInt(1, orderNumber);
+            callableStatement.registerOutParameter(2, Types.FLOAT);
+            callableStatement.execute();
+            price = callableStatement.getFloat(2);
+            callableStatement.close();
+            return price;
         } catch (Exception e) {
             System.out.println("count fail!!");
             e.printStackTrace();
