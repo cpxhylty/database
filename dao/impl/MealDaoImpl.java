@@ -129,7 +129,7 @@ public class MealDaoImpl implements MealDao {
             preparedStatement.executeUpdate();
             resultSet.close();
             preparedStatement.close();*/
-            String sql = "{call count_price(?)}";
+            String sql = "{call count_price(?, ?)}";
             CallableStatement callableStatement = connection.prepareCall(sql);
             callableStatement.setInt(1, orderNumber);
             callableStatement.registerOutParameter(2, Types.FLOAT);

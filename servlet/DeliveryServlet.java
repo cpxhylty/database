@@ -2,7 +2,9 @@ package servlet;
 
 import pojo.Delivery;
 import pojo.Vip;
+import service.CartService;
 import service.DeliveryService;
+import service.impl.CartServiceImpl;
 import service.impl.DeliveryServiceImpl;
 
 import javax.servlet.ServletException;
@@ -19,6 +21,7 @@ import java.util.List;
 
 public class DeliveryServlet extends HttpServlet {
     DeliveryService deliveryService = new DeliveryServiceImpl();
+    CartService cartService = new CartServiceImpl();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -97,6 +100,7 @@ public class DeliveryServlet extends HttpServlet {
             }
 
             deliveryService.makeOrder(time, account, price, address, number, names, numbers);
+            cartService.deleteByAccount(account);
 
             resp.sendRedirect("");
         }
